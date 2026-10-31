@@ -2743,6 +2743,15 @@ img {
   letter-spacing: 0.02em;
 }
 
+.match-card__score em {
+  margin-left: 5px;
+  font-style: normal;
+  font-size: 10px;
+  letter-spacing: 0;
+  color: var(--faint);
+  font-variant-numeric: tabular-nums;
+}
+
 /* projection */
 
 .projection {
@@ -3125,6 +3134,16 @@ a.insight-mini:hover {
   content: '~';
   margin-right: 1px;
   color: var(--faint);
+}
+
+.fixture-row__scoreprob {
+  font-family: var(--mono);
+  font-size: 8.5px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--faint);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
 .fixture-row__prob {
@@ -4037,6 +4056,23 @@ a.insight-mini:hover {
 
 .chart-card {
   padding: 16px;
+}
+
+.model-note {
+  margin: 0 0 18px;
+  padding: 9px 12px;
+  border: 1px solid rgba(232, 240, 234, 0.07);
+  border-radius: 6px;
+  background: rgba(232, 240, 234, 0.022);
+  font-size: 11px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.model-note b {
+  font-weight: 550;
+  color: var(--ink-2);
+  white-space: nowrap;
 }
 
 .chart-note {
@@ -8559,6 +8595,11 @@ a.insight-mini:hover {
 
   .fixture-row__centre {
     grid-area: score;
+  }
+
+  .fixture-row__scoreprob {
+    font-size: 8px;
+    letter-spacing: 0.02em;
   }
 
   .fixture-row__team--away {

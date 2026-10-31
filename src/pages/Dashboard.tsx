@@ -40,9 +40,13 @@ function MatchCard({ match }: { match: Match }) {
       </div>
       <ProbBar prediction={match.prediction} height={6} />
       <div className="match-card__foot">
-        <span className="mono-label">MODEL SCORE</span>
-        <span className="match-card__score">
+        <span className="mono-label">MOST LIKELY</span>
+        <span
+          className="match-card__score"
+          title={`Most likely exact scoreline — ${fmtPct(score.probability, 1)} probability`}
+        >
           {score.home}–{score.away}
+          <em>{fmtPct(score.probability, 1)}</em>
         </span>
         <span className="mono-label">
           xG {fmtNum(match.prediction.homeXg, 2)}–{fmtNum(match.prediction.awayXg, 2)}
@@ -173,7 +177,9 @@ export function Dashboard() {
                     : `${feature.prediction.topScorelines[0].home}–${feature.prediction.topScorelines[0].away}`}
                 </div>
                 <div className="feature-card__score-label">
-                  {feature.score ? 'final score' : 'most likely score'}
+                  {feature.score
+                    ? 'final score'
+                    : `most likely · ${fmtPct(feature.prediction.topScorelines[0].probability, 1)}`}
                 </div>
                 <ProbBar prediction={feature.prediction} height={9} showLabels />
               </div>
@@ -205,7 +211,10 @@ export function Dashboard() {
                 <span>
                   <small>Top scorelines</small>
                   <b className="feature-card__scorelines">
-                    {feature.prediction.topScorelines.slice(0, 2).map((score) => `${score.home}-${score.away}`).join(' · ')}
+                    {feature.prediction.topScorelines
+                      .slice(0, 2)
+                      .map((score) => `${score.home}-${score.away} ${fmtPct(score.probability, 1)}`)
+                      .join(' · ')}
                   </b>
                 </span>
               </div>
@@ -285,6 +294,10 @@ export function Dashboard() {
             <div className="empty">Season complete. Switch season to see live projections.</div>
           )}
         </div>
+        <p className="chart-note">
+          The score is the single most likely exact scoreline; the percentage beside it is that exact score's
+          probability. Those probabilities are typically 8–13%, so the same 1–1 can be modal across several fixtures.
+        </p>
       </section>
 
       <div className="split split--wide">

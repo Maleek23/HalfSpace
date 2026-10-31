@@ -25,6 +25,7 @@ function FixtureRow({ match }: { match: Match }) {
         : 'away';
   const pickTeam = pick === 'home' ? match.home.shortName : pick === 'away' ? match.away.shortName : 'Draw';
   const score = match.score ?? match.prediction.topScorelines[0];
+  const topScore = match.prediction.topScorelines[0];
   const isPlayed = match.status === 'played';
 
   return (
@@ -38,10 +39,15 @@ function FixtureRow({ match }: { match: Match }) {
         <TeamBadge team={match.home} size="xs" />
       </div>
       <div className="fixture-row__centre">
-        <span className={isPlayed ? 'fixture-row__score' : 'fixture-row__score fixture-row__score--predicted'}>
+        <span
+          className={isPlayed ? 'fixture-row__score' : 'fixture-row__score fixture-row__score--predicted'}
+          title={isPlayed ? undefined : `Most likely exact scoreline — ${fmtPct(topScore.probability, 1)} probability`}
+        >
           {score.home}–{score.away}
         </span>
-        <span className="mono-label">{isPlayed ? 'result' : 'model score'}</span>
+        <span className="fixture-row__scoreprob">
+          {isPlayed ? 'result' : `${fmtPct(topScore.probability, 1)} chance`}
+        </span>
       </div>
       <div className="fixture-row__team fixture-row__team--away">
         <TeamBadge team={match.away} size="xs" />
@@ -136,6 +142,11 @@ export function Fixtures() {
           <span><i className="legend-dot legend-dot--away" /> Away</span>
         </div>
       </div>
+
+      <p className="model-note">
+        <b>How to read the score:</b> it is the single most likely exact scoreline. The percentage beneath it is
+        that exact score's probability, usually 8–13%. Repeated 1–1 favourites are a distribution, not a hardcoded pick.
+      </p>
 
       {grouped.length === 0 ? (
         <div className="empty">No matches in this view. Switch season or status.</div>

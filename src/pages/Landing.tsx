@@ -113,7 +113,11 @@ export function Landing() {
                     </div>
                     <div className="landing-board__score">
                       <b>{next.score ? `${next.score.home}–${next.score.away}` : `${next.prediction.topScorelines[0].home}–${next.prediction.topScorelines[0].away}`}</b>
-                      <small>{next.score ? 'final score' : 'most likely score'}</small>
+                      <small title="Most likely exact scoreline, with its probability">
+                        {next.score
+                          ? 'final score'
+                          : `most likely · ${fmtPct(next.prediction.topScorelines[0].probability, 1)}`}
+                      </small>
                     </div>
                     <div className="landing-board__team landing-board__team--away">
                       <TeamBadge team={next.away} size="lg" />

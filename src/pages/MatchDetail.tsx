@@ -148,7 +148,7 @@ export function MatchDetail() {
                 : `${top[0].home}–${top[0].away}`}
             </div>
             <div className="match-hero__score-label">
-              {match.score ? 'final score' : 'model score'}
+              {match.score ? 'final score' : `most likely · ${fmtPct(top[0].probability, 1)}`}
             </div>
             <ProbBar prediction={match.prediction} height={10} showLabels />
             <div className="match-hero__pick">{resultText}</div>
@@ -171,7 +171,7 @@ export function MatchDetail() {
           <span><small>Actual xG</small><b>{match.xg ? `${fmtNum(match.xg.home, 2)} – ${fmtNum(match.xg.away, 2)}` : '—'}</b></span>
           <span><small>BTTS</small><b>{fmtPct(match.prediction.btts)}</b></span>
           <span><small>Over 2.5</small><b>{fmtPct(over25)}</b></span>
-          <span><small>Top score</small><b>{top[0].home}–{top[0].away}</b></span>
+          <span><small>Top score</small><b>{top[0].home}–{top[0].away} · {fmtPct(top[0].probability, 1)}</b></span>
           {match.status === 'played' && (
             <span>
               <small>Model result</small>
